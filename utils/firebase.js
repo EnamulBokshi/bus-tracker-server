@@ -18,18 +18,15 @@ const firebaseConfig = {
 const buses = {
   bus1: {
     route: "Downtown Express",
-    currentLocation: {
-      latitude: 23.17144,
-      longitude: 90.281234
-    },
+    currentLocation: { latitude: 23.7948374, longitude: 90.3683716 },
     passengers: 25,
     status: "On Time"
   },
   bus2: {
     route: "Airport Shuttle",
     currentLocation: {
-      latitude: 23.18133,
-      longitude: 90.291234
+      latitude: 23.7948385,
+      longitude: 90.3683722
     },
     passengers: 10,
     status: "Delayed"
@@ -37,8 +34,8 @@ const buses = {
   bus3: {
     route: "City Loop",
     currentLocation: {
-      latitude: 23.19122,
-      longitude: 90.301234
+      latitude: 23.7948381,
+      longitude: 90.3683732
     },
     passengers: 32,
     status: "On Time"

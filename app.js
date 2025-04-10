@@ -12,11 +12,6 @@ app.use(cors());
 const locationRef = ref(database, 'buses');
 
 
-// while(true){
-
-// }
-
-
 
 const server = http.createServer(app);
 const io = new Server(server,{

@@ -17,13 +17,19 @@ const firebaseConfig = {
 // Create some dummy bus data
 const buses = {
   bus1: {
-    route: "Downtown Express",
+    driver: "John Doe",
+    busName: "3Start 25",
+    busNumber: "1234",
+    route: "Uttara Route",
     currentLocation: { latitude: 23.7948374, longitude: 90.3683716 },
     passengers: 25,
     status: "On Time"
   },
   bus2: {
-    route: "Airport Shuttle",
+    driver: "Enamul Haque",
+    busName: "3Start 20",
+    busNumber: "12345",
+    route: "Sony Shuttle",
     currentLocation: {
       latitude: 23.7948385,
       longitude: 90.3683722
@@ -32,7 +38,10 @@ const buses = {
     status: "Delayed"
   },
   bus3: {
-    route: "City Loop",
+    driver: "Jack Smith",
+    busName: "3Start 10",
+    busNumber: "123456",
+    route: "Mirpur Route",
     currentLocation: {
       latitude: 23.7948381,
       longitude: 90.3683732

@@ -13,16 +13,28 @@ import { getDatabase, ref, onValue, set } from "firebase/database";
 //   measurementId: "G-0TK8VKHPS8"
 // };
 
+
+// OTrackerPlus config
 const firebaseConfig = {
-  apiKey: "AIzaSyBM60GbatJbCcmytzfW9J4gL-pDxz4MxMo",
-  authDomain: "esp32-gps-firebase-2fd12.firebaseapp.com",
-  databaseURL: "https://esp32-gps-firebase-2fd12-default-rtdb.firebaseio.com",
-  projectId: "esp32-gps-firebase-2fd12",
-  storageBucket: "esp32-gps-firebase-2fd12.firebasestorage.app",
-  messagingSenderId: "468797100873",
-  appId: "1:468797100873:web:b581561c26a8b6898a0098",
-  measurementId: "G-G06X5HYNFY"
+  apiKey: "AIzaSyCCtBukAmVUR8Bu8ykKiKH0VsbKhiUqB-M",
+  authDomain: "otrackerplus.firebaseapp.com",
+  projectId: "otrackerplus",
+  storageBucket: "otrackerplus.firebasestorage.app",
+  messagingSenderId: "539679610029",
+  appId: "1:539679610029:web:2e9cd3158b9ba896282224",
+  measurementId: "G-N8XYFWBJ22"
 };
+
+// const firebaseConfig = {
+//   apiKey: "AIzaSyBM60GbatJbCcmytzfW9J4gL-pDxz4MxMo",
+//   authDomain: "esp32-gps-firebase-2fd12.firebaseapp.com",
+//   databaseURL: "https://esp32-gps-firebase-2fd12-default-rtdb.firebaseio.com",
+//   projectId: "esp32-gps-firebase-2fd12",
+//   storageBucket: "esp32-gps-firebase-2fd12.firebasestorage.app",
+//   messagingSenderId: "468797100873",
+//   appId: "1:468797100873:web:b581561c26a8b6898a0098",
+//   measurementId: "G-G06X5HYNFY"
+// };
 
 
 // Create some dummy bus data
@@ -73,8 +85,11 @@ function writeBusData() {
 const app = initializeApp(firebaseConfig);
 const database = getDatabase(app);
 
+// console.log("Database", database);
+console.log("ref", ref(database, 'buses'));
+
 // Write bus data to Firebase
-writeBusData();
+// writeBusData();
 
 export { database, ref, onValue };
 

@@ -127,30 +127,42 @@ app.get('/buses', async (req, res) => {
 
 // socket.io connection
 io.on('connection', (socket) => {
+    console.log("User connected:", socket.id);
 
-    onValue(locationRef, (snapshot) => {
+    // Send all bus locations when a user connects
+    const sendAllBusLocations = (snapshot) => {
         if (snapshot.exists()) {
-            // console.log(snapshot.val());
             const buses = snapshot.val();
-            Object.keys(buses).forEach(busId => {
-                io.emit('busLocation', {
-                    busId: busId,
-                    ...buses[busId]
-                });
+            
+            // First emit an event to clear existing bus data
+            socket.emit('clearBusLocations');
+            
+            // Then emit each bus location with a small delay to prevent race conditions
+            Object.keys(buses).forEach((busId, index) => {
+                setTimeout(() => {
+                    socket.emit('busLocation', {
+                        busId: busId,
+                        ...buses[busId]
+                    });
+                }, index * 100); // 100ms delay between each bus emission
             });
+            
+            // Also broadcast all buses at once for clients that can handle it
+            socket.emit('allBusLocations', buses);
         }
-    })
+    };
+
+    // Send initial bus locations
+    onValue(locationRef, sendAllBusLocations);
 
     socket.on('userLocation', (data) => {
-        console.log("Location: ", data);
-    })
-    console.log("user connected", socket.id)
-    // io.emit('busLocation', {latitude: 4.333, longitude: 5.666});
+        console.log("User location received:", socket.id, data);
+    });
+
+    socket.on('disconnect', () => {
+        console.log("User disconnected:", socket.id);
+    });
 })
-
-
-
-
 
 app.get('/', (req, res) => {
     res.send('hello world');

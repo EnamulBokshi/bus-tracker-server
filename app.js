@@ -9,6 +9,9 @@ import { SSEServerTransport } from "@modelcontextprotocol/sdk/server/sse.js";
 import { z } from 'zod'
 import aiRouter from './routes/gemini.routes.js';
 
+import { config } from 'dotenv';
+config({path: '.env'})
+const PORT = process.env.PORT || 5500;
 const app = express();
 app.use(cors());
 app.use(express.json());
@@ -90,23 +93,26 @@ app.get("/sse", async (req, res) => {
 
         res.on("close", () => {
             delete sseTrasport[transport.sessionId];
+            console.log("SSE Server closed");
         });
 
         await mcpServer.connect(transport);
         console.log("Connected to SSE");
     } catch (error) {
-        console.error("Error in SSE endpoint:", error);
+        console.error("Error in SSE endpoint: ", error);
         res.status(500).send("Internal Server Error");
     }
 });
 // endpoint to handle incoming messages
 app.post("/messages", async (req, res) => {
+    console.log("POST request to /messages");
     const sessionId = req.query.sessionId;
     const transport = sseTrasport[sessionId];
     if (!transport) {
         return res.status(404).send("Session not found");
     }
     await transport.handlePostMessage(req, res);
+    console.log("Message sent to SSE");
 })
 
 // endpoint to retrieve all buses
@@ -143,7 +149,7 @@ io.on('connection', (socket) => {
 })
 
 
-const PORT = 5500;
+
 
 
 app.get('/', (req, res) => {

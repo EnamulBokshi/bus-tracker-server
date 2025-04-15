@@ -13,6 +13,7 @@ const aiRouter = Router();
 const MCP_BASE_URL = process.env.MCP_SERVER_URL;
 const GeminiApiKey = process.env.GEMINI_API_KEY;
 
+
 const ai = new GoogleGenAI({
     apiKey: GeminiApiKey,
 })
@@ -26,13 +27,17 @@ const tools = [];
 
 
 let isInitialized = false;
+let isInitializing = false;
 const initializeMCPClient = async () => {
     if (isInitialized) return;
+    if (isInitialized || isInitializing) return;
+    isInitializing = true;
     console.log("Initializing MCP Client");
     try {
-        await mcpClient.connect(new SSEClientTransport(new URL(`${MCP_BASE_URL}/sse`)))
+        await mcpClient.connect(new SSEClientTransport(new URL(`${MCP_BASE_URL}/sse`)));
         console.log("Connected to MCP server");
         const listed = await mcpClient.listTools();
+        console.log("Tools: ",JSON.stringify(listed.tools, null, 2));
         tools.push(...listed.tools.map((tool) => {
             return {
                 name: tool.name || "Unnamed",
